@@ -40,10 +40,19 @@ class PostContainer extends Component{
             ...payload,
             id: this.state.posts.length + 1
         }
-        this.setState({
-            posts: [...this.state.posts, post],
-            modalShow: false
-        });
+        return fetch('http://jsonplaceholder.typicode.com/posts', {
+            method: 'POST', // or 'PUT'
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(post)
+        }).then((response) => response.json())
+        .then((data) => {
+            this.setState({
+                posts: [...this.state.posts, data],
+                modalShow: false
+            });
+        })
     }
 
     componentDidMount() {

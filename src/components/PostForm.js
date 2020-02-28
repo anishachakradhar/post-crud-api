@@ -5,6 +5,7 @@ class PostForm extends Component{
   constructor(props){
       super(props);
       this.state = {
+          loading: false,
           title: '',
           body: ''
       }
@@ -19,10 +20,16 @@ class PostForm extends Component{
   onSubmit = (e) => {
       e.preventDefault();
       const { title, body } = this.state;
-      this.props.addpost({ title, body });
       this.setState({
-          title: '',
-          body: ''
+          loading: true
+      })
+      this.props.addpost({ title, body })
+      .then(() => {
+        this.setState({
+            loading: false,
+            title: '',
+            body: ''
+        })
       })
   }
   render(){
@@ -50,9 +57,14 @@ class PostForm extends Component{
                           <Form.Label>Description</Form.Label>
                           <Form.Control name="body" type="text" placeholder="Enter description" value={this.state.body} onChange={this.handleChange} />
                       </Form.Group>
-                      <Button variant="success" type="submit">
-                          Submit
-                      </Button>
+                      {this.state.loading ? 
+                        <Button variant="success" type="button" disabled>
+                            Please wait
+                        </Button> :
+                        <Button variant="success" type="submit">
+                            Submit
+                        </Button>
+                      }  
                       <Button className="button-close" variant="secondary" onClick={this.props.onHide}>Close</Button>
                   </Form>
               </Modal.Body>
