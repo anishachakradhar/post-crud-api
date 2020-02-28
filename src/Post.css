@@ -1,0 +1,17 @@
+.post {
+    width: 80rem;
+    margin: 80px 325px;
+}
+
+.add-post {
+    width: 15rem;
+    float: right;
+}
+
+.form {
+    margin: 30px 30px;
+}
+
+.button-close {
+    float: right;
+}
